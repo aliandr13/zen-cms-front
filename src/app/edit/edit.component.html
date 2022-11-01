@@ -1,0 +1,22 @@
+<div class="card">
+    <h5 class="card-header">Edit Page</h5>
+    <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+			<label for="title">Title: </label>
+			<input id="title" type="text" formControlName="title">
+		  
+			<label for="path">Path: </label>
+			<input id="parh" type="text" formControlName="path">
+
+			<div class="editor">
+				<ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+				</ngx-editor-menu>
+				<ngx-editor [editor]="editor" formControlName="editorContent">
+				</ngx-editor>
+			</div>
+
+			<button type="submit">Submit</button>
+		</form>
+    </div>
+</div>
