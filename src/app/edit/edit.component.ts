@@ -1,12 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import { Validators, Editor, Toolbar } from 'ngx-editor';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AbstractControl, FormControl, FormGroup} from '@angular/forms';
+import {Validators, Editor, Toolbar} from 'ngx-editor';
 
-import { ArticleService } from '../service/article.service';
-import { ArticleContent } from '../interface/article';
+import {ArticleService} from '../service/article.service';
+import {ArticleContent} from '../interface/article';
 
 import jsonDoc from './doc';
-import { ThisReceiver } from '@angular/compiler';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Observable} from "rxjs";
+import {tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-edit',
@@ -15,9 +17,11 @@ import { ThisReceiver } from '@angular/compiler';
 })
 export class EditComponent implements OnInit, OnDestroy {
 
-  constructor(private articleService: ArticleService) { }
+  constructor(private articleService: ArticleService, private route: ActivatedRoute, private router: Router) {
+  }
 
   editordoc = jsonDoc;
+  article: ArticleContent;
 
   editor: Editor;
   toolbar: Toolbar = [
@@ -25,7 +29,7 @@ export class EditComponent implements OnInit, OnDestroy {
     ['underline', 'strike'],
     ['code', 'blockquote'],
     ['ordered_list', 'bullet_list'],
-    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5'] }],
+    [{heading: ['h1', 'h2', 'h3', 'h4', 'h5']}],
     ['link', 'image'],
     ['text_color', 'background_color'],
     ['align_left', 'align_center', 'align_right', 'align_justify'],
@@ -36,7 +40,7 @@ export class EditComponent implements OnInit, OnDestroy {
     title: new FormControl('', Validators.required()),
     path: new FormControl(''),
     editorContent: new FormControl(
-      { value: "<h2>Hello world</h2>", disabled: false },
+      {value: '', disabled: false},
       Validators.required()
     ),
   });
@@ -47,6 +51,16 @@ export class EditComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.editor = new Editor();
+    let id: string = <string>this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.articleService.getContent(id)
+        .subscribe(value => {
+          this.article = value;
+          this.form.controls.editorContent.setValue(value.content);
+          this.form.controls.path.setValue(value.path);
+          this.form.controls.title.setValue(value.title);
+        })
+    }
   }
 
   ngOnDestroy(): void {
@@ -56,18 +70,22 @@ export class EditComponent implements OnInit, OnDestroy {
   onSubmit() {
     // TODO: Use EventEmitter with form value
     console.warn(this.form.value);
-    console.log(this.form.value.editorContent)
-
-    this.articleService.creatArticle( {
+    let art: ArticleContent = {
       title: <string>this.form.value.title,
-      author: 'Me',
+      author: "ME",
       content: <string>this.form.value.editorContent,
       path: <string>this.form.value.path
-    })
-    .subscribe()
-
-    // new ArticleContent()
-    // debugger
+    };
+    debugger;
+    if (this.article) {
+      art.id = this.article.id
+      art.author = this.article.author;
+      this.articleService.updateArticle(art).subscribe()
+    } else {
+      this.articleService.createArticle(art).subscribe()
+    }
+    debugger;
+    this.router.navigate(["/pages"])
   }
 
 }

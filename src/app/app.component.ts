@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ArticleService } from './service/article.service';
 
 @Component({
   selector: 'app-root',
@@ -10,12 +8,9 @@ import { ArticleService } from './service/article.service';
 export class AppComponent implements OnInit{
   title = 'zencms-admin-front';
 
-  artCount$: Observable<number> | undefined;
-
-  constructor(private articleService: ArticleService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.artCount$ = this.articleService.articlesCount$
   }
 
 }

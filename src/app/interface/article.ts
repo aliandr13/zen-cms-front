@@ -1,14 +1,17 @@
 export interface Article {
-    id?: number;
-    title: string;
-    published: boolean;
-    author: string;
-    created: Date;
+  id: number;
+  title: string;
+  path: string;
+  published: boolean;
+  author: string;
+  created: Date;
+  updated: Date;
 }
 
 export interface ArticleContent {
-    title: string;
-    path: string;
-    author: string;
-    content: string;
+  id?: number;
+  title: string;
+  path: string;
+  author: string;
+  content: string;
 }

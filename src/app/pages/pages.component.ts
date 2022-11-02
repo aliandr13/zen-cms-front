@@ -11,7 +11,7 @@ import { ArticleService } from '../service/article.service';
 })
 export class PagesComponent implements OnInit {
 
-  articles$: Observable<Article[]> | undefined;
+  articles$: Observable<Article[]>;
 
   constructor(private articleService: ArticleService) { }
 

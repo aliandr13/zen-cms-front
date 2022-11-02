@@ -11,22 +11,28 @@
             <thead>
                 <tr>
                     <th>Title</th>
+                    <th>Path</th>
                     <th>Author</th>
                     <th>Published</th>
                     <th>Created</th>
+                    <th>Updated</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let article of articles$ | async">
                     <td>{{article.title}}</td>
+                    <td>{{article.path}}</td>
                     <td>{{article.author}}</td>
                     <td>
-                        <h4><i [ngClass]="article.published ? 'bi bi-check-circle-fill' : 'bi bi-x-circle-fill'"></i>
+                        <h4>
+                          <i [ngClass]="article.published ? 'bi bi-check-circle-fill' : 'bi bi-x-circle-fill'"></i>
                         </h4>
                     </td>
                     <td>{{article.created}}</td>
-                    <td><a class="btn btn-dark" routerLink="/edit">Edit</a> <button class="btn btn-danger">Delete</button></td>
+                    <td>{{article.updated}}</td>
+                    <td><a class="btn btn-dark" [routerLink]="['edit', article.id]"
+                    >Edit</a> <button class="btn btn-danger">Delete</button></td>
                 </tr>
             </tbody>
         </table>

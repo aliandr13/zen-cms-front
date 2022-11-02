@@ -8,9 +8,8 @@ import { ArticleService } from '../service/article.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  
-  artCount$: Observable<number> | undefined;
-  
+
+  artCount$: Observable<number>;
 
   constructor(private articleService: ArticleService) { }
 

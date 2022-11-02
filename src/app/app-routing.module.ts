@@ -7,11 +7,12 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditComponent } from './edit/edit.component';
 
 const routes: Routes = [
-  { path: 'pages', component: PagesComponent },
+  { path: 'pages', component: PagesComponent, title: "pages"},
+  { path: 'pages/edit/:id', component: EditComponent },
+  { path: 'pages/add', component: EditComponent  },
   { path: 'posts', component: PostsComponent },
   { path: 'users', component: UsersComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'edit', component: EditComponent },
   { path: '',   redirectTo: '/dashboard', pathMatch: 'full' }, // redirect to Dashboard
 ];
 
@@ -20,7 +21,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {
-
-
-
 }
