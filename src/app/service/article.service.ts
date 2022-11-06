@@ -53,4 +53,19 @@ export class ArticleService {
   handleError(error: any): Observable<never> {
     return throwError(() => new Error('test: ' + error))
   }
+
+  delete(article: Article): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${article.id}`).pipe(
+      tap(console.log),
+      catchError(this.handleError)
+    );
+  }
+
+  updatePart(article: Article): Observable<any> {
+    return this.http.patch(`${this.apiUrl}`, article).pipe(
+      tap(console.log),
+      catchError(this.handleError)
+    );
+  }
+
 }
