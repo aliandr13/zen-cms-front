@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://admin.zencms.link'
+  apiUrl: 'https://zencms.link'
 };
