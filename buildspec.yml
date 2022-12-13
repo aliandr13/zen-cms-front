@@ -2,7 +2,7 @@ version: 0.2
 env:
   variables:
     APP_NAME: "zencms-admin-front"
-    S3_BUCKET: "s3://zencms.xyz"
+    S3_BUCKET: "s3://zencms.link"
 phases:
   install:
     runtime-versions:
